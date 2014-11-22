@@ -11,8 +11,10 @@ namespace ContactPlanner
         BindingSource m_bindingEvents = new BindingSource();
         BindingSource m_bindingContacts = new BindingSource();
 
-        bool isShowAll = false;
+        List<Contact> m_currentContactsInDataGrid = new List<Contact>();
+        List<Event> m_currentEventsInDataGrid = new List<Event>();
 
+        bool isShowAll = false;
 
         public MainWindow()
         {
@@ -95,14 +97,14 @@ namespace ContactPlanner
 
             #endregion // AddDataGridContactsColumn
 
-            updateDataContacts(Data.Contacts);
-            updateDataEvents();
-            updateBoldedDates();
         }
 
 
         private void saveContacts(List<Contact> _data, String _path, int _count)
         {
+            if (_data.Count == 0)
+                return;
+
             StreamWriter fileContacts = new StreamWriter(_path);
 
             saveContacts(_data, fileContacts, _count);
@@ -259,7 +261,9 @@ namespace ContactPlanner
 
             if (Data.Events.ContainsKey(monthCalendar.SelectionStart))
             {
-                m_bindingEvents.DataSource = Data.Events[monthCalendar.SelectionStart];
+                m_currentEventsInDataGrid = Data.Events[monthCalendar.SelectionStart];
+
+                m_bindingEvents.DataSource = m_currentEventsInDataGrid;
 
                 if (Data.Events[monthCalendar.SelectionStart].Count != 0)
                     buttonDeleteEvent.Enabled = true;
@@ -285,6 +289,8 @@ namespace ContactPlanner
                 buttonDeleteContact.Enabled = false;
             else
                 buttonDeleteContact.Enabled = true;
+
+            m_currentContactsInDataGrid = _data;
 
             m_bindingContacts.DataSource = _data;
 

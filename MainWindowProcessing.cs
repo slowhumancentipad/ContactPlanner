@@ -95,7 +95,8 @@ namespace ContactPlanner
 
                 this.Text = "Планировщик. Все события.";
 
-                m_bindingEvents.DataSource = allEvents;
+                m_currentEventsInDataGrid = result;
+                m_bindingEvents.DataSource = m_currentEventsInDataGrid;
                 dataGridViewEvents.DataSource = m_bindingEvents;
                 m_bindingEvents.ResetBindings(true);
 
@@ -166,10 +167,7 @@ namespace ContactPlanner
 
         private void dataGridViewEvents_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (isShowAll)
-                return;
-
-            Form editEvent = new EventWindow(Data.Events[monthCalendar.SelectionStart][e.RowIndex]);
+            Form editEvent = new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
             updateBoldedDates();
             updateDataEvents();
@@ -178,9 +176,10 @@ namespace ContactPlanner
 
         private void dataGridViewContacts_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Form editContact = new ContactWindow(Data.Contacts[e.RowIndex]);
+            Form editContact = new ContactWindow(m_currentContactsInDataGrid[e.RowIndex]);
             editContact.ShowDialog(this);
             updateDataContacts(Data.Contacts);
+            textBoxSearch.Text = "<Введите текст для поиска среди контактов>";
         }
 
 
