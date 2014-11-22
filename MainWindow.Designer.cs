@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonShow = new System.Windows.Forms.Button();
@@ -43,11 +43,18 @@
             this.buttonAddContact = new System.Windows.Forms.Button();
             this.buttonDeleteContact = new System.Windows.Forms.Button();
             this.dataGridViewContacts = new System.Windows.Forms.DataGridView();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuLoad = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEvents)).BeginInit();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewContacts)).BeginInit();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -57,7 +64,7 @@
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl.ItemSize = new System.Drawing.Size(100, 25);
-            this.tabControl.Location = new System.Drawing.Point(9, 9);
+            this.tabControl.Location = new System.Drawing.Point(10, 38);
             this.tabControl.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl.Multiline = true;
             this.tabControl.Name = "tabControl";
@@ -135,8 +142,8 @@
             this.dataGridViewEvents.ReadOnly = true;
             this.dataGridViewEvents.RowHeadersVisible = false;
             this.dataGridViewEvents.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEvents.Size = new System.Drawing.Size(491, 287);
             this.dataGridViewEvents.TabIndex = 7;
@@ -209,21 +216,70 @@
             this.dataGridViewContacts.ReadOnly = true;
             this.dataGridViewContacts.RowHeadersVisible = false;
             this.dataGridViewContacts.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.dataGridViewContacts.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.dataGridViewContacts.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewContacts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewContacts.Size = new System.Drawing.Size(661, 255);
             this.dataGridViewContacts.TabIndex = 6;
             this.dataGridViewContacts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewContacts_CellContentDoubleClick);
+            // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuFile});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(700, 24);
+            this.menuStrip.TabIndex = 1;
+            this.menuStrip.Text = "menuStrip";
+            // 
+            // toolStripMenuFile
+            // 
+            this.toolStripMenuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuSave,
+            this.toolStripMenuLoad});
+            this.toolStripMenuFile.Name = "toolStripMenuFile";
+            this.toolStripMenuFile.Size = new System.Drawing.Size(48, 20);
+            this.toolStripMenuFile.Text = "Файл";
+            // 
+            // toolStripMenuSave
+            // 
+            this.toolStripMenuSave.Name = "toolStripMenuSave";
+            this.toolStripMenuSave.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuSave.Text = "Сохранить";
+            this.toolStripMenuSave.Click += new System.EventHandler(this.toolStripMenuSave_Click);
+            // 
+            // toolStripMenuLoad
+            // 
+            this.toolStripMenuLoad.Name = "toolStripMenuLoad";
+            this.toolStripMenuLoad.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuLoad.Text = "Загрузить";
+            this.toolStripMenuLoad.Click += new System.EventHandler(this.toolStripMenuLoad_Click);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "cpf";
+            this.saveFileDialog.Filter = "ContactPlanner files (*.cpf)|*.cpf";
+            this.saveFileDialog.RestoreDirectory = true;
+            this.saveFileDialog.Title = "Сохранить";
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "cpf";
+            this.openFileDialog.FileName = "data";
+            this.openFileDialog.Filter = "ContactPlanner files (*.cpf)|*.cpf";
+            this.openFileDialog.RestoreDirectory = true;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(700, 350);
+            this.ClientSize = new System.Drawing.Size(700, 379);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -236,7 +292,10 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewContacts)).EndInit();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -255,6 +314,12 @@
         private System.Windows.Forms.Button buttonDeleteContact;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxSearch;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuFile;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuSave;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuLoad;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 

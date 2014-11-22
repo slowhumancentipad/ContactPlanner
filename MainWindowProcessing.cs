@@ -144,15 +144,13 @@ namespace ContactPlanner
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            saveContacts(Data.Contacts, "contacts.txt", Data.Contacts.Count);
-            saveEvents(Data.Events, "events.txt");
+            binSaveData(m_currentPathToDataFile);
         }
 
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            restoreContacts(Data.Contacts, "contacts.txt");
-            restoreEvents(Data.Events, "events.txt");
+            binRestoreData(m_currentPathToDataFile);
 
             foreach (var _pair in Data.Events)
                 if(_pair.Value.Count != 0)
@@ -203,6 +201,28 @@ namespace ContactPlanner
         {
             if (textBoxSearch.Text == "<Введите текст для поиска среди контактов>")
                 textBoxSearch.Text = "";
+        }
+
+
+        private void toolStripMenuSave_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                m_currentPathToDataFile = saveFileDialog.FileName;
+                binSaveData(m_currentPathToDataFile);
+            }
+        }
+
+
+        private void toolStripMenuLoad_Click(object sender, EventArgs e)
+        {
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                m_currentPathToDataFile = openFileDialog.FileName;
+                MainWindow_Load(sender, e);
+            }
         }
     }
 }
