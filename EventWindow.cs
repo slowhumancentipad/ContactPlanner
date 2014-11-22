@@ -10,7 +10,6 @@ namespace ContactPlanner
         const int MIN_SYMBOLS = 20;
 
         Event m_currentEvent;
-        DateTime m_time;
 
         public EventWindow(Event _newEvent)
         {
@@ -96,10 +95,6 @@ namespace ContactPlanner
                     textBoxHeader.Text = strBuild.ToString() + "...";
                 }
             }
-            
-            //List<Contact> selectedContacts = new List<Contact>();
-            //foreach (var _value in listContacts.SelectedIndices)
-            //    selectedContacts.Add(Data.Contacts[Convert.ToInt32(_value)]);
 
             if (!Data.Events.ContainsKey(dateTimePicker.Value.Date))
                 Data.Events.Add(dateTimePicker.Value.Date, new List<Event>());
@@ -108,10 +103,9 @@ namespace ContactPlanner
             {
                 int indexEdited = Data.Events[dateTimePicker.Value.Date].IndexOf(m_currentEvent);
 
-                Data.Events[dateTimePicker.Value.Date][indexEdited].Date = dateTimePicker.Value; //ИЗМЕНЕНО
+                Data.Events[dateTimePicker.Value.Date][indexEdited].Date = dateTimePicker.Value;
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Header = textBoxHeader.Text;
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Description = textBoxDescription.Text;
-                //Data.Events[dateTimePicker.Value.Date][indexEdited].Contacts = dateTimePicker.Value.Date;
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Priority = indexToPriority(comboBoxPriority.SelectedIndex);
             }
             else
@@ -119,7 +113,6 @@ namespace ContactPlanner
                 m_currentEvent.Date = dateTimePicker.Value;
                 m_currentEvent.Header = textBoxHeader.Text;
                 m_currentEvent.Description = textBoxDescription.Text;
-                //m_currentEvent.Contacts
                 m_currentEvent.Priority = indexToPriority(comboBoxPriority.SelectedIndex);
 
                 Data.Events[dateTimePicker.Value.Date].Add(m_currentEvent);

@@ -55,7 +55,8 @@
             this.listContacts.Name = "listContacts";
             this.listContacts.ShowGroups = false;
             this.listContacts.Size = new System.Drawing.Size(245, 272);
-            this.listContacts.TabIndex = 20;
+            this.listContacts.TabIndex = 0;
+            this.listContacts.TabStop = false;
             this.listContacts.UseCompatibleStateImageBehavior = false;
             this.listContacts.View = System.Windows.Forms.View.Details;
             this.listContacts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listContacts_MouseDown);
@@ -72,14 +73,14 @@
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxDescription.Size = new System.Drawing.Size(237, 128);
-            this.textBoxDescription.TabIndex = 19;
+            this.textBoxDescription.TabIndex = 4;
             // 
             // textBoxHeader
             // 
             this.textBoxHeader.Location = new System.Drawing.Point(15, 74);
             this.textBoxHeader.Name = "textBoxHeader";
             this.textBoxHeader.Size = new System.Drawing.Size(237, 20);
-            this.textBoxHeader.TabIndex = 18;
+            this.textBoxHeader.TabIndex = 3;
             // 
             // label4
             // 
@@ -122,7 +123,7 @@
             this.buttonSave.Location = new System.Drawing.Point(50, 258);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 21;
+            this.buttonSave.TabIndex = 5;
             this.buttonSave.Text = "Сохранить";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
@@ -132,7 +133,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(131, 258);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 22;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -144,7 +145,7 @@
             this.dateTimePicker.Location = new System.Drawing.Point(100, 9);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(152, 20);
-            this.dateTimePicker.TabIndex = 23;
+            this.dateTimePicker.TabIndex = 1;
             // 
             // comboBoxPriority
             // 
@@ -157,7 +158,7 @@
             this.comboBoxPriority.Location = new System.Drawing.Point(100, 33);
             this.comboBoxPriority.Name = "comboBoxPriority";
             this.comboBoxPriority.Size = new System.Drawing.Size(152, 21);
-            this.comboBoxPriority.TabIndex = 24;
+            this.comboBoxPriority.TabIndex = 2;
             // 
             // EventWindow
             // 

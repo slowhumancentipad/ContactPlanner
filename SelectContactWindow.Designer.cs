@@ -48,7 +48,7 @@
             this.listViewAll.MultiSelect = false;
             this.listViewAll.Name = "listViewAll";
             this.listViewAll.Size = new System.Drawing.Size(165, 238);
-            this.listViewAll.TabIndex = 1;
+            this.listViewAll.TabIndex = 3;
             this.listViewAll.UseCompatibleStateImageBehavior = false;
             this.listViewAll.View = System.Windows.Forms.View.Details;
             // 
@@ -64,7 +64,7 @@
             this.buttonToAll.Location = new System.Drawing.Point(183, 91);
             this.buttonToAll.Name = "buttonToAll";
             this.buttonToAll.Size = new System.Drawing.Size(96, 23);
-            this.buttonToAll.TabIndex = 2;
+            this.buttonToAll.TabIndex = 1;
             this.buttonToAll.Text = "→";
             this.buttonToAll.UseVisualStyleBackColor = true;
             this.buttonToAll.Click += new System.EventHandler(this.buttonToAll_Click);
@@ -76,7 +76,7 @@
             this.buttonToSelected.Location = new System.Drawing.Point(183, 120);
             this.buttonToSelected.Name = "buttonToSelected";
             this.buttonToSelected.Size = new System.Drawing.Size(96, 23);
-            this.buttonToSelected.TabIndex = 3;
+            this.buttonToSelected.TabIndex = 4;
             this.buttonToSelected.Text = "←";
             this.buttonToSelected.UseVisualStyleBackColor = true;
             this.buttonToSelected.Click += new System.EventHandler(this.buttonToSelected_Click);
@@ -86,7 +86,7 @@
             this.buttonDone.Location = new System.Drawing.Point(183, 198);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new System.Drawing.Size(96, 23);
-            this.buttonDone.TabIndex = 4;
+            this.buttonDone.TabIndex = 5;
             this.buttonDone.Text = "Готово";
             this.buttonDone.UseVisualStyleBackColor = true;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
@@ -96,7 +96,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(183, 227);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(96, 23);
-            this.buttonCancel.TabIndex = 5;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -116,7 +116,7 @@
             this.listViewSelected.MultiSelect = false;
             this.listViewSelected.Name = "listViewSelected";
             this.listViewSelected.Size = new System.Drawing.Size(165, 238);
-            this.listViewSelected.TabIndex = 0;
+            this.listViewSelected.TabIndex = 1;
             this.listViewSelected.UseCompatibleStateImageBehavior = false;
             this.listViewSelected.View = System.Windows.Forms.View.Details;
             // 
