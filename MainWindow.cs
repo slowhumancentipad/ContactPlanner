@@ -305,8 +305,6 @@ namespace ContactPlanner
 
                 for (int i = 0; i < countDates; ++i)
                 {
-                    //var str = binReader.ReadChars(20);
-// FIXME читает пустую строку
                     if(binReader.ReadString() != "DATE")
                         throw new ReadDataException();
 
