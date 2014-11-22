@@ -144,13 +144,13 @@ namespace ContactPlanner
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            binSaveData(m_currentPathToDataFile);
+            saveData(m_currentPathToDataFile);
         }
 
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            binRestoreData(m_currentPathToDataFile);
+            restoreData(m_currentPathToDataFile);
 
             foreach (var _pair in Data.Events)
                 if(_pair.Value.Count != 0)
@@ -210,7 +210,7 @@ namespace ContactPlanner
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_currentPathToDataFile = saveFileDialog.FileName;
-                binSaveData(m_currentPathToDataFile);
+                saveData(m_currentPathToDataFile);
             }
         }
 
