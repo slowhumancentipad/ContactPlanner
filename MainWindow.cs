@@ -18,11 +18,14 @@ namespace ContactPlanner
 
         bool isShowAll = false;
 
-        public MainWindow()
+        public MainWindow(string[] args)
         {
             Data.Contacts = new List<Contact>();
             Data.Events = new Dictionary<DateTime, List<Event>>();
             Data.LastId = 0;
+
+            if (args.Length > 1)
+                m_currentPathToDataFile = args[1];
 
             InitializeComponent();
 
@@ -454,9 +457,8 @@ namespace ContactPlanner
                 throw;
             }
         }
-        
-    }
 
+    }
 
     public class ReadDataException : Exception
     { }
