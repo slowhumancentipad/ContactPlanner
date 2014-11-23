@@ -165,6 +165,9 @@ namespace ContactPlanner
 
         private void dataGridViewEvents_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             Form editEvent = new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
             updateBoldedDates();
@@ -174,6 +177,9 @@ namespace ContactPlanner
 
         private void dataGridViewContacts_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             Form editContact = new ContactWindow(m_currentContactsInDataGrid[e.RowIndex]);
             editContact.ShowDialog(this);
             updateDataContacts(Data.Contacts);
