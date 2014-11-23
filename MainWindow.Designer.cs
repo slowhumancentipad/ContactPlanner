@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonShow = new System.Windows.Forms.Button();
@@ -142,12 +142,13 @@
             this.dataGridViewEvents.ReadOnly = true;
             this.dataGridViewEvents.RowHeadersVisible = false;
             this.dataGridViewEvents.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEvents.Size = new System.Drawing.Size(491, 287);
             this.dataGridViewEvents.TabIndex = 7;
             this.dataGridViewEvents.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEvents_CellContentDoubleClick);
+            this.dataGridViewEvents.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewEvents_ColumnHeaderMouseClick);
             // 
             // tabPage2
             // 
@@ -216,12 +217,13 @@
             this.dataGridViewContacts.ReadOnly = true;
             this.dataGridViewContacts.RowHeadersVisible = false;
             this.dataGridViewContacts.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.dataGridViewContacts.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.dataGridViewContacts.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewContacts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewContacts.Size = new System.Drawing.Size(661, 255);
             this.dataGridViewContacts.TabIndex = 6;
             this.dataGridViewContacts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewContacts_CellContentDoubleClick);
+            this.dataGridViewContacts.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewContacts_ColumnHeaderMouseClick);
             // 
             // menuStrip
             // 
@@ -245,14 +247,14 @@
             // toolStripMenuSave
             // 
             this.toolStripMenuSave.Name = "toolStripMenuSave";
-            this.toolStripMenuSave.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuSave.Size = new System.Drawing.Size(132, 22);
             this.toolStripMenuSave.Text = "Сохранить";
             this.toolStripMenuSave.Click += new System.EventHandler(this.toolStripMenuSave_Click);
             // 
             // toolStripMenuLoad
             // 
             this.toolStripMenuLoad.Name = "toolStripMenuLoad";
-            this.toolStripMenuLoad.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuLoad.Size = new System.Drawing.Size(132, 22);
             this.toolStripMenuLoad.Text = "Загрузить";
             this.toolStripMenuLoad.Click += new System.EventHandler(this.toolStripMenuLoad_Click);
             // 

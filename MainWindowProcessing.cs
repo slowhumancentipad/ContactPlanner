@@ -230,5 +230,99 @@ namespace ContactPlanner
                 MainWindow_Load(sender, e);
             }
         }
+
+
+        private void dataGridViewEvents_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            List<Event> result = new List<Event>();
+
+            if (e.ColumnIndex == 0)
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby _event.getDate().ToBinary() ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+            else if (e.ColumnIndex == 1)
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby _event.Header ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+            else if (e.ColumnIndex == 2)
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby _event.Description ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+            else
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby EventWindow.priorityToIndex(_event.Priority) ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+
+            m_currentEventsInDataGrid = result; // Для корректной работы редактирования
+            m_bindingEvents.DataSource = result;
+            m_bindingEvents.ResetBindings(true);
+        }
+
+
+        private void dataGridViewContacts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            List<Contact> result = new List<Contact>();
+
+            if (e.ColumnIndex == 0)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.FirstName ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else if (e.ColumnIndex == 1)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.SecondName ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else if (e.ColumnIndex == 2)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.LastName ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else if (e.ColumnIndex == 3)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.Telephone ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.Email ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+
+            m_currentContactsInDataGrid = result; // Для корректной работы редактирования
+            m_bindingContacts.DataSource = result;
+            m_bindingContacts.ResetBindings(true);
+        }
     }
 }
