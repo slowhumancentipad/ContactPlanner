@@ -47,7 +47,7 @@ namespace ContactPlanner
 
         private void buttonCreateEvent_Click(object sender, EventArgs e)
         {
-            Form addEvent = new EventWindow(new Event(monthCalendar.SelectionStart, "", "", new List<Contact>(), PriorityKind.Low, ++Data.LastId));// DateTime.Now --> monthCalendar.SelectionStart
+            Form addEvent = new EventWindow(new Event(new DateTime(monthCalendar.SelectionStart.Ticks), "", "", new List<Contact>(), PriorityKind.Low, ++Data.LastId));
             addEvent.ShowDialog(this);
             updateBoldedDates();
             updateDataEvents();
@@ -89,7 +89,7 @@ namespace ContactPlanner
 
                 var result = (
                     from _event in allEvents
-                    orderby _event.Date.ToBinary() ascending
+                    orderby _event.getDate().ToBinary() ascending
                     select _event
                     ).ToList<Event>();
 

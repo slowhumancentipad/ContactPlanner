@@ -231,7 +231,7 @@ namespace ContactPlanner
                     binWriter.Write(Convert.ToString(_event.getId()));    // Сохраняем ID события
 
                     binWriter.Write("DATE");
-                    binWriter.Write(_event.Date.Ticks); // Сохраняем точное время события в тиках
+                    binWriter.Write(_event.getDate().Ticks); // Сохраняем точное время события в тиках
 
                     binWriter.Write("HEADER");
                     binWriter.Write(_event.Header);     // Сохраняем заголовок

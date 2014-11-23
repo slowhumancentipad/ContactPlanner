@@ -19,7 +19,7 @@ namespace ContactPlanner
             
             updateContactList();
 
-            dateTimePicker.Value = m_currentEvent.Date;
+            dateTimePicker.Value = m_currentEvent.getDate();
             comboBoxPriority.SelectedIndex = priorityToIndex(m_currentEvent.Priority);
             textBoxHeader.Text = m_currentEvent.Header;
             textBoxDescription.Text = m_currentEvent.Description;
@@ -33,7 +33,7 @@ namespace ContactPlanner
             foreach (var _contact in m_currentEvent.Contacts)
                 listContacts.Items.Add(_contact.FirstName + " " + _contact.LastName);
 
-            listContacts.Items.Add("<Нажмите на список, чтобы добавить>");
+            listContacts.Items.Add("<Кликните на список, чтобы добавить>");
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -103,14 +103,14 @@ namespace ContactPlanner
             {
                 int indexEdited = Data.Events[dateTimePicker.Value.Date].IndexOf(m_currentEvent);
 
-                Data.Events[dateTimePicker.Value.Date][indexEdited].Date = dateTimePicker.Value;
+                Data.Events[dateTimePicker.Value.Date][indexEdited].setDate(dateTimePicker.Value);
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Header = textBoxHeader.Text;
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Description = textBoxDescription.Text;
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Priority = indexToPriority(comboBoxPriority.SelectedIndex);
             }
             else
             {
-                m_currentEvent.Date = dateTimePicker.Value;
+                m_currentEvent.setDate(dateTimePicker.Value);
                 m_currentEvent.Header = textBoxHeader.Text;
                 m_currentEvent.Description = textBoxDescription.Text;
                 m_currentEvent.Priority = indexToPriority(comboBoxPriority.SelectedIndex);

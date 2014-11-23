@@ -14,7 +14,18 @@ namespace ContactPlanner
     {
         private int m_id;
 
-        public DateTime Date            { get; set; }
+        private DateTime m_date;
+
+        public String Date              
+        { 
+            get 
+            { 
+                return m_date.ToShortDateString() + ' ' + m_date.ToShortTimeString();
+            }
+            
+            private set
+            {} 
+        }
 
         public String Header            { get; set; }
 
@@ -33,7 +44,7 @@ namespace ContactPlanner
             ,   int             _id
             )
         {
-            Date        = _date;
+            m_date      = _date;
             Header      = _header;
             Description = _descripton;
             Contacts    = _contactList;
@@ -44,6 +55,18 @@ namespace ContactPlanner
         public int getId()
         {
             return m_id;
+        }
+
+
+        public DateTime getDate()
+        {
+            return m_date;
+        }
+
+
+        public void setDate(DateTime _date)
+        {
+            m_date = _date;
         }
     }
 }
