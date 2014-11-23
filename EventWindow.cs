@@ -99,6 +99,21 @@ namespace ContactPlanner
             if (!Data.Events.ContainsKey(dateTimePicker.Value.Date))
                 Data.Events.Add(dateTimePicker.Value.Date, new List<Event>());
 
+            // Если произошли изменения в дате и заголовке
+            if (m_currentEvent.Header != textBoxHeader.Text ||
+                m_currentEvent.getDate() != dateTimePicker.Value)
+            {
+                foreach (var _event in Data.Events[dateTimePicker.Value.Date])
+                {
+                    if (_event.getDate() == dateTimePicker.Value &&
+                        _event.Header == textBoxHeader.Text)
+                    {
+                        MessageBox.Show("Событие с такими же датой и заголовком уже существует!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+
             if (Data.Events[dateTimePicker.Value.Date].Contains(m_currentEvent))
             {
                 int indexEdited = Data.Events[dateTimePicker.Value.Date].IndexOf(m_currentEvent);
