@@ -68,9 +68,18 @@ namespace ContactPlanner
 
         private void buttonDeleteEvent_Click(object sender, EventArgs e)
         {
-            Data.Events[Data.CurrentDate].RemoveAt(dataGridViewEvents.CurrentRow.Index);
+            if (dataGridViewEvents.CurrentRow.Index == -1)
+                return;
+
+            Event selectedEvent = m_currentEventsInDataGrid[dataGridViewEvents.CurrentRow.Index];
+
+            Data.Events[selectedEvent.getDate().Date].Remove(selectedEvent);
+
+            m_currentEventsInDataGrid.Remove(selectedEvent);
+
             updateBoldedDates();
-            updateDataEvents();
+            m_bindingEvents.DataSource = m_currentEventsInDataGrid;
+            m_bindingEvents.ResetBindings(true);
         }
 
 
@@ -99,8 +108,6 @@ namespace ContactPlanner
                 m_bindingEvents.DataSource = m_currentEventsInDataGrid;
                 dataGridViewEvents.DataSource = m_bindingEvents;
                 m_bindingEvents.ResetBindings(true);
-
-                buttonDeleteEvent.Enabled = false;
             }
             else
             {
