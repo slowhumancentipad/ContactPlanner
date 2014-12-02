@@ -47,7 +47,7 @@ namespace ContactPlanner
 
         private void buttonCreateEvent_Click(object sender, EventArgs e)
         {
-            Form addEvent = new EventWindow(new Event(monthCalendar.SelectionStart, "", "", new List<Contact>(), PriorityKind.Low, ++Data.LastId));// DateTime.Now --> monthCalendar.SelectionStart
+            Form addEvent = new EventWindow(new Event(new DateTime(monthCalendar.SelectionStart.Ticks), "", "", new List<Contact>(), PriorityKind.Low, ++Data.LastId));
             addEvent.ShowDialog(this);
             updateBoldedDates();
             updateDataEvents();
@@ -68,9 +68,18 @@ namespace ContactPlanner
 
         private void buttonDeleteEvent_Click(object sender, EventArgs e)
         {
-            Data.Events[Data.CurrentDate].RemoveAt(dataGridViewEvents.CurrentRow.Index);
+            if (dataGridViewEvents.CurrentRow.Index == -1)
+                return;
+
+            Event selectedEvent = m_currentEventsInDataGrid[dataGridViewEvents.CurrentRow.Index];
+
+            Data.Events[selectedEvent.getDate().Date].Remove(selectedEvent);
+
+            m_currentEventsInDataGrid.Remove(selectedEvent);
+
             updateBoldedDates();
-            updateDataEvents();
+            m_bindingEvents.DataSource = m_currentEventsInDataGrid;
+            m_bindingEvents.ResetBindings(true);
         }
 
 
@@ -89,17 +98,16 @@ namespace ContactPlanner
 
                 var result = (
                     from _event in allEvents
-                    orderby _event.Date.ToBinary() ascending
+                    orderby _event.getDate().ToBinary() ascending
                     select _event
                     ).ToList<Event>();
 
                 this.Text = "Планировщик. Все события.";
 
-                m_bindingEvents.DataSource = allEvents;
+                m_currentEventsInDataGrid = result;
+                m_bindingEvents.DataSource = m_currentEventsInDataGrid;
                 dataGridViewEvents.DataSource = m_bindingEvents;
                 m_bindingEvents.ResetBindings(true);
-
-                buttonDeleteEvent.Enabled = false;
             }
             else
             {
@@ -114,7 +122,9 @@ namespace ContactPlanner
             if (tabControl.SelectedIndex == 0)
                 updateDataEvents();
             else if (tabControl.SelectedIndex == 1)
-                updateDataContacts();
+                updateDataContacts(Data.Contacts);
+
+            textBoxSearch.Text = "<Введите текст для поиска среди контактов>";
         }
 
 
@@ -122,39 +132,50 @@ namespace ContactPlanner
         {
             Form addContact = new ContactWindow(new Contact("", "", "", "", ""));
             addContact.ShowDialog(this);
-            updateDataContacts();
+            updateDataContacts(Data.Contacts);
         }
 
 
         private void buttonDeleteContact_Click(object sender, EventArgs e)
         {
-            Data.Contacts.RemoveAt(dataGridViewContacts.CurrentRow.Index);
-            updateDataContacts();
+            Contact contactDeleted = Data.Contacts[dataGridViewContacts.CurrentRow.Index];
+
+            foreach (var _pair in Data.Events)
+                foreach(var _event in _pair.Value)
+                    _event.Contacts.Remove(contactDeleted);
+
+            Data.Contacts.Remove(contactDeleted);
+            updateDataContacts(Data.Contacts);
         }
 
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            saveContacts(Data.Contacts, "contacts.txt", Data.Contacts.Count);
-            saveEvents(Data.Events, "events.txt");
+            saveData(m_currentPathToDataFile);
         }
 
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            restoreContacts(Data.Contacts, "contacts.txt");
-            restoreEvents(Data.Events, "events.txt");
-            updateDataContacts();
+            restoreData(m_currentPathToDataFile);
+
+            foreach (var _pair in Data.Events)
+                if(_pair.Value.Count != 0)
+                monthCalendar.AddBoldedDate(_pair.Key);
+
+            monthCalendar.UpdateBoldedDates();
+
+            updateDataContacts(Data.Contacts);
             updateDataEvents();
         }
 
 
         private void dataGridViewEvents_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (isShowAll)
+            if (e.RowIndex == -1)
                 return;
 
-            Form editEvent = new EventWindow(Data.Events[monthCalendar.SelectionStart][e.RowIndex]);
+            Form editEvent = new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
             updateBoldedDates();
             updateDataEvents();
@@ -163,9 +184,152 @@ namespace ContactPlanner
 
         private void dataGridViewContacts_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Form editContact = new ContactWindow(Data.Contacts[e.RowIndex]);
+            if (e.RowIndex == -1)
+                return;
+
+            Form editContact = new ContactWindow(m_currentContactsInDataGrid[e.RowIndex]);
             editContact.ShowDialog(this);
-            updateDataContacts();
+            updateDataContacts(Data.Contacts);
+            textBoxSearch.Text = "<Введите текст для поиска среди контактов>";
+        }
+
+
+        private void textBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            const int KEY_ENTER = 13;
+
+            if (e.KeyChar == KEY_ENTER)
+                searchContact(textBoxSearch.Text);
+        }
+
+
+        private void textBoxSearch_Leave(object sender, EventArgs e)
+        {
+            if (textBoxSearch.Text.Length == 0)
+                textBoxSearch.Text = "<Введите текст для поиска среди контактов>";
+        }
+
+
+        private void textBoxSearch_Enter(object sender, EventArgs e)
+        {
+            if (textBoxSearch.Text == "<Введите текст для поиска среди контактов>")
+                textBoxSearch.Text = "";
+        }
+
+
+        private void toolStripMenuSave_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                m_currentPathToDataFile = saveFileDialog.FileName;
+                saveData(m_currentPathToDataFile);
+            }
+        }
+
+
+        private void toolStripMenuLoad_Click(object sender, EventArgs e)
+        {
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                m_currentPathToDataFile = openFileDialog.FileName;
+                MainWindow_Load(sender, e);
+            }
+        }
+
+
+        private void dataGridViewEvents_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            List<Event> result = new List<Event>();
+
+            if (e.ColumnIndex == 0)
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby _event.getDate().ToBinary() ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+            else if (e.ColumnIndex == 1)
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby _event.Header ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+            else if (e.ColumnIndex == 2)
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby _event.Description ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+            else
+            {
+                result = (
+                    from _event in m_currentEventsInDataGrid
+                    orderby EventWindow.priorityToIndex(_event.Priority) ascending
+                    select _event
+                    ).ToList<Event>();
+            }
+
+            m_currentEventsInDataGrid = result; // Для корректной работы редактирования
+            m_bindingEvents.DataSource = result;
+            m_bindingEvents.ResetBindings(true);
+        }
+
+
+        private void dataGridViewContacts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            List<Contact> result = new List<Contact>();
+
+            if (e.ColumnIndex == 0)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.FirstName ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else if (e.ColumnIndex == 1)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.SecondName ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else if (e.ColumnIndex == 2)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.LastName ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else if (e.ColumnIndex == 3)
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.Telephone ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+            else
+            {
+                result = (
+                    from _contact in m_currentContactsInDataGrid
+                    orderby _contact.Email ascending
+                    select _contact
+                    ).ToList<Contact>();
+            }
+
+            m_currentContactsInDataGrid = result; // Для корректной работы редактирования
+            m_bindingContacts.DataSource = result;
+            m_bindingContacts.ResetBindings(true);
         }
     }
 }
