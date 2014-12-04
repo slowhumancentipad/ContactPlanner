@@ -17,16 +17,29 @@ namespace ContactPlanner
             InitializeComponent();
 
             SelectedContacts = new List<Contact>(_userList);
-
             m_listUser = new List<Contact>(_userList);
+            m_listAll = new List<Contact>();
 
-            var result = (
-                from _contact in Data.Contacts
-                where !_userList.Contains(_contact)
-                select _contact
-                ).ToList<Contact>();
+            for (int i = 0; i < Data.Contacts.Count; ++i)
+            {
+                bool has = false;
 
-            m_listAll = result;
+                for (int j = 0; j < m_listUser.Count; ++j)
+                {
+                    if (Data.Contacts[i].FirstName == m_listUser[j].FirstName &&
+                        Data.Contacts[i].SecondName == m_listUser[j].SecondName &&
+                        Data.Contacts[i].LastName == m_listUser[j].LastName &&
+                        Data.Contacts[i].Telephone == m_listUser[j].Telephone &&
+                        Data.Contacts[i].Email == m_listUser[j].Email)
+                    {
+                        has = true;
+                        break;
+                    }
+                }
+
+                if (!has)
+                    m_listAll.Add(Data.Contacts[i]);
+            }
 
             foreach (var _contact in m_listAll)
                 listViewAll.Items.Add(_contact.FirstName + ' ' + _contact.LastName);
