@@ -49,7 +49,7 @@ namespace ContactPlanner
         {
             Form addEvent = new EventWindow(new Event(new DateTime(monthCalendar.SelectionStart.Ticks), "", "", new List<Contact>(), PriorityKind.Low, ++Data.LastId));
             addEvent.ShowDialog(this);
-            updateBoldedDates();
+            updateBoldedDates(Data.LastDate);
             updateDataEvents();
 
             if (isShowAll)
@@ -74,11 +74,11 @@ namespace ContactPlanner
             Event selectedEvent = m_currentEventsInDataGrid[dataGridViewEvents.CurrentRow.Index];
 
             Data.Events[selectedEvent.getDate().Date].Remove(selectedEvent);
-
+            DateTime deletedEventDate = selectedEvent.getDate();
             m_currentEventsInDataGrid.Remove(selectedEvent);
 
             updateDataEvents();
-            updateBoldedDates();
+            updateBoldedDates(deletedEventDate);
         }
 
 
@@ -107,6 +107,8 @@ namespace ContactPlanner
                 m_bindingEvents.DataSource = m_currentEventsInDataGrid;
                 dataGridViewEvents.DataSource = m_bindingEvents;
                 m_bindingEvents.ResetBindings(true);
+
+                changeColorEvents();
             }
             else
             {
@@ -176,7 +178,7 @@ namespace ContactPlanner
 
             Form editEvent = new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
-            updateBoldedDates();
+            updateBoldedDates(Data.LastDate);
             updateDataEvents();
         }
 

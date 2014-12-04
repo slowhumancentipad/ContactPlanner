@@ -136,6 +136,18 @@ namespace ContactPlanner
         }
 
 
+        private void changeColorEvents()
+        {
+            for (int i = 0; i < m_currentEventsInDataGrid.Count; ++i)
+            {
+                if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.Middle)
+                    changeRowColorEventTo(i, m_colorMiddle);
+                else if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.High)
+                    changeRowColorEventTo(i, m_colorHigh);
+            }
+        }
+
+
         private void updateDataEvents()
         {
 
@@ -173,13 +185,7 @@ namespace ContactPlanner
             dataGridViewEvents.DataSource = m_bindingEvents;
             m_bindingEvents.ResetBindings(true);
 
-            for (int i = 0; i < m_currentEventsInDataGrid.Count; ++i)
-            {
-                if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.Middle)
-                    changeRowColorEventTo(i, m_colorMiddle);
-                else if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.High)
-                    changeRowColorEventTo(i, m_colorHigh);
-            }
+            changeColorEvents();
         }
 
 
@@ -201,17 +207,17 @@ namespace ContactPlanner
         }
 
 
-        private void updateBoldedDates()
+        private void updateBoldedDates(DateTime _currentDate)
         {
-            if (Data.Events.ContainsKey(Data.LastDate))
+            if (Data.Events.ContainsKey(_currentDate))
             {
-                if (Data.Events[Data.LastDate].Count == 0)
+                if (Data.Events[_currentDate].Count == 0)
                 {
                     buttonDeleteEvent.Enabled = false;
 
                     var result = (
                         from _date in monthCalendar.BoldedDates
-                        where _date != monthCalendar.SelectionStart
+                        where _date != _currentDate
                         select _date
                         ).ToArray<DateTime>();
 
@@ -219,9 +225,11 @@ namespace ContactPlanner
                 }
                 else
                 {
-                    monthCalendar.AddBoldedDate(Data.LastDate);
-                    monthCalendar.UpdateBoldedDates();
+                    monthCalendar.AddBoldedDate(_currentDate);
+                    
                 }
+
+                monthCalendar.UpdateBoldedDates();
             }
         }
 
