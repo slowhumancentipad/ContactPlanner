@@ -36,8 +36,8 @@ namespace ContactPlanner
             dataGridViewEvents.Columns.Add(new DataGridViewTextBoxColumn
                 {
                     DataPropertyName = "Date",
-                    HeaderText = "Дата и время",
-                    Width = 100
+                    HeaderText = "Время",
+                    Width = 50
                 });
 
             dataGridViewEvents.Columns.Add(new DataGridViewTextBoxColumn
@@ -52,13 +52,6 @@ namespace ContactPlanner
                     DataPropertyName = "Description",
                     HeaderText = "Описание",
                     AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                });
-
-            dataGridViewEvents.Columns.Add(new DataGridViewTextBoxColumn
-                {
-                    DataPropertyName = "Priority",
-                    HeaderText = "Приоритет",
-                    Width = 70
                 });
 
             #endregion // AddDataGridEventsColumn
@@ -105,9 +98,43 @@ namespace ContactPlanner
         }
 
 
+        private List<Event> mergeEventList(List<Event> _list1, List<Event> _list2)
+        {
+            Comparison<Event> compareByTime =
+                (lhs, rhs) =>
+                {
+                    if (lhs.getDate().Hour == rhs.getDate().Hour)
+                        return lhs.getDate().Minute.CompareTo(rhs.getDate().Minute);
+
+                    return lhs.getDate().Hour.CompareTo(rhs.getDate().Hour);
+                };
+
+            for (int i = 0; i < _list1.Count; ++i)
+                if (_list1[i].getDate().Minute == 0)
+                    _list2.RemoveAt(_list1[i].getDate().Hour);
+
+            List<Event> tmp = new List<Event>(_list1);
+
+            tmp.AddRange(_list2);
+            tmp.Sort(compareByTime);
+
+            return tmp;
+        }
+
+
         private void updateDataEvents()
         {
+
             Data.CurrentDate = monthCalendar.SelectionStart;
+
+            List<Event> emptyTimeList = new List<Event>();
+            DateTime timeForEmptyList = Data.CurrentDate.Date;
+
+            for (int i = 0; i < 24; ++i)
+            {
+                emptyTimeList.Add(new Event(timeForEmptyList));
+                timeForEmptyList = timeForEmptyList.AddHours(1);
+            }
 
             this.Text = "Планировщик. Текущая дата: " + monthCalendar.SelectionStart.ToShortDateString();
 
@@ -115,7 +142,7 @@ namespace ContactPlanner
             {
                 m_currentEventsInDataGrid = Data.Events[monthCalendar.SelectionStart];
 
-                m_bindingEvents.DataSource = m_currentEventsInDataGrid;
+                m_currentEventsInDataGrid = mergeEventList(m_currentEventsInDataGrid, emptyTimeList);
 
                 if (Data.Events[monthCalendar.SelectionStart].Count != 0)
                     buttonDeleteEvent.Enabled = true;
@@ -124,10 +151,11 @@ namespace ContactPlanner
             }
             else
             {
-                m_bindingEvents.DataSource = new List<Event>();
+                m_currentEventsInDataGrid = emptyTimeList;
                 buttonDeleteEvent.Enabled = false;
             }
 
+            m_bindingEvents.DataSource = m_currentEventsInDataGrid;
             dataGridViewEvents.DataSource = m_bindingEvents;
             m_bindingEvents.ResetBindings(true);
         }
@@ -178,30 +206,32 @@ namespace ContactPlanner
 
         private void searchContact(string _searchedStr)
         {
-            if (_searchedStr.Length == 0)
-                return;
-
-            var searchedStrings = _searchedStr.Split(new string[]{" "}, StringSplitOptions.RemoveEmptyEntries);
-
             List<Contact> result = new List<Contact>();
 
-            foreach(var _contact in Data.Contacts)
+            if (_searchedStr.Length == 0)
+                result = Data.Contacts;
+            else
             {
-                bool isFinded = true;
+                var searchedStrings = _searchedStr.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (var _string in searchedStrings)
-                    if (_contact.FirstName.Contains(_string) ||
-                        _contact.SecondName.Contains(_string) ||
-                        _contact.LastName.Contains(_string) ||
-                        _contact.Telephone.Contains(_string) ||
-                        _contact.Email.Contains(_string))
-                        isFinded &= true;
-                    else
-                        isFinded &= false;
+                foreach (var _contact in Data.Contacts)
+                {
+                    bool isFinded = true;
 
-                if(isFinded)
-                    if(!result.Contains(_contact))
-                        result.Add(_contact);
+                    foreach (var _string in searchedStrings)
+                        if (_contact.FirstName.Contains(_string) ||
+                            _contact.SecondName.Contains(_string) ||
+                            _contact.LastName.Contains(_string) ||
+                            _contact.Telephone.Contains(_string) ||
+                            _contact.Email.Contains(_string))
+                            isFinded &= true;
+                        else
+                            isFinded &= false;
+
+                    if (isFinded)
+                        if (!result.Contains(_contact))
+                            result.Add(_contact);
+                }
             }
 
             updateDataContacts(result);
@@ -243,7 +273,7 @@ namespace ContactPlanner
                     binWriter.Write(_event.Description);// Сохраняем описание
 
                     binWriter.Write("PRIORITY");
-                    binWriter.Write(Convert.ToString(EventWindow.priorityToIndex(_event.Priority)));   // Сохраняем приоритет
+                    binWriter.Write(Convert.ToString(EventWindow.priorityToIndex(_event.getPriority())));   // Сохраняем приоритет
 
                     binWriter.Write("EVENTCONTACTS");
                     saveContacts(_event.Contacts, binWriter);// Сохраняем контакты

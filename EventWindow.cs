@@ -20,7 +20,7 @@ namespace ContactPlanner
             updateContactList();
 
             dateTimePicker.Value = m_currentEvent.getDate();
-            comboBoxPriority.SelectedIndex = priorityToIndex(m_currentEvent.Priority);
+            comboBoxPriority.SelectedIndex = priorityToIndex(m_currentEvent.getPriority());
             textBoxHeader.Text = m_currentEvent.Header;
             textBoxDescription.Text = m_currentEvent.Description;
         }
@@ -121,14 +121,14 @@ namespace ContactPlanner
                 Data.Events[dateTimePicker.Value.Date][indexEdited].setDate(dateTimePicker.Value);
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Header = textBoxHeader.Text;
                 Data.Events[dateTimePicker.Value.Date][indexEdited].Description = textBoxDescription.Text;
-                Data.Events[dateTimePicker.Value.Date][indexEdited].Priority = indexToPriority(comboBoxPriority.SelectedIndex);
+                Data.Events[dateTimePicker.Value.Date][indexEdited].setPriority(indexToPriority(comboBoxPriority.SelectedIndex));
             }
             else
             {
                 m_currentEvent.setDate(dateTimePicker.Value);
                 m_currentEvent.Header = textBoxHeader.Text;
                 m_currentEvent.Description = textBoxDescription.Text;
-                m_currentEvent.Priority = indexToPriority(comboBoxPriority.SelectedIndex);
+                m_currentEvent.setPriority(indexToPriority(comboBoxPriority.SelectedIndex));
 
                 Data.Events[dateTimePicker.Value.Date].Add(m_currentEvent);
             }

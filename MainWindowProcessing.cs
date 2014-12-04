@@ -77,9 +77,8 @@ namespace ContactPlanner
 
             m_currentEventsInDataGrid.Remove(selectedEvent);
 
+            updateDataEvents();
             updateBoldedDates();
-            m_bindingEvents.DataSource = m_currentEventsInDataGrid;
-            m_bindingEvents.ResetBindings(true);
         }
 
 
@@ -271,7 +270,7 @@ namespace ContactPlanner
             {
                 result = (
                     from _event in m_currentEventsInDataGrid
-                    orderby EventWindow.priorityToIndex(_event.Priority) ascending
+                    orderby EventWindow.priorityToIndex(_event.getPriority()) ascending
                     select _event
                     ).ToList<Event>();
             }

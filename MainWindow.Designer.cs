@@ -138,12 +138,14 @@
             this.dataGridViewEvents.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dataGridViewEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewEvents.Location = new System.Drawing.Point(6, 6);
+            this.dataGridViewEvents.MultiSelect = false;
             this.dataGridViewEvents.Name = "dataGridViewEvents";
             this.dataGridViewEvents.ReadOnly = true;
             this.dataGridViewEvents.RowHeadersVisible = false;
             this.dataGridViewEvents.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Crimson;
             this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewEvents.RowTemplate.ReadOnly = true;
             this.dataGridViewEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEvents.Size = new System.Drawing.Size(491, 287);
             this.dataGridViewEvents.TabIndex = 7;

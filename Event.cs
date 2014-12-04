@@ -12,15 +12,15 @@ namespace ContactPlanner
 
     public class Event
     {
-        private int m_id;
-
         private DateTime m_date;
+        private PriorityKind m_priority;
+        private int m_id;
 
         public String Date              
         { 
             get 
             { 
-                return m_date.ToShortDateString() + ' ' + m_date.ToShortTimeString();
+                return "  " + m_date.ToShortTimeString();
             }
             
             private set
@@ -32,8 +32,6 @@ namespace ContactPlanner
         public String Description       { get; set; }
 
         public List< Contact > Contacts { get; set; }
-
-        public PriorityKind Priority    { get; set; }
 
         public Event(
                 DateTime        _date
@@ -48,8 +46,15 @@ namespace ContactPlanner
             Header      = _header;
             Description = _descripton;
             Contacts    = _contactList;
-            Priority    = _priority;
+            m_priority    = _priority;
             m_id        = _id;
+        }
+
+        public Event(DateTime _date)
+        {
+            m_date = _date;
+            Contacts = new List<Contact>();
+            m_priority = PriorityKind.Low;
         }
 
         public int getId()
@@ -67,6 +72,18 @@ namespace ContactPlanner
         public void setDate(DateTime _date)
         {
             m_date = _date;
+        }
+
+
+        public PriorityKind getPriority()
+        {
+            return m_priority;
+        }
+
+
+        public void setPriority(PriorityKind _priority)
+        {
+            m_priority = _priority;
         }
     }
 }
