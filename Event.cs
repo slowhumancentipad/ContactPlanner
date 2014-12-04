@@ -5,7 +5,8 @@ namespace ContactPlanner
 {
     public enum PriorityKind 
     { 
-            Low
+            Unspecified
+        ,   Low
         ,   Middle
         ,   High 
     }   
@@ -16,15 +17,24 @@ namespace ContactPlanner
         private PriorityKind m_priority;
         private int m_id;
 
-        public String Date              
+        public String Time        
         { 
             get 
             { 
                 return "  " + m_date.ToShortTimeString();
             }
             
-            private set
-            {} 
+            private set { } 
+        }
+
+        public String DateAndTime
+        {
+            get
+            {
+                return m_date.ToShortDateString() + ' ' + m_date.ToShortTimeString();
+            }
+
+            private set { }
         }
 
         public String Header            { get; set; }
@@ -54,7 +64,7 @@ namespace ContactPlanner
         {
             m_date = _date;
             Contacts = new List<Contact>();
-            m_priority = PriorityKind.Low;
+            m_priority = PriorityKind.Unspecified;
         }
 
         public int getId()

@@ -59,6 +59,7 @@ namespace ContactPlanner
         {
             switch (_priority)
             {
+                case PriorityKind.Unspecified:
                 case PriorityKind.Low: return 0;
                 case PriorityKind.Middle: return 1;
                 case PriorityKind.High: return 2;
@@ -92,7 +93,9 @@ namespace ContactPlanner
                     for (int i = 0; i < MIN_SYMBOLS; ++i)
                         strBuild.Append(textBoxDescription.Text[i]);
 
-                    textBoxHeader.Text = strBuild.ToString() + "...";
+                    strBuild.Append("...");
+
+                    textBoxHeader.Text = strBuild.ToString();
                 }
             }
 

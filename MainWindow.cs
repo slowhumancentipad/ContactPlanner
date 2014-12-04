@@ -19,7 +19,7 @@ namespace ContactPlanner
 
         bool isShowAll = false;
 
-        Color m_colorLow = Color.White;
+        Color m_colorLow = Color.LightYellow;
         Color m_colorMiddle = Color.Yellow;
         Color m_colorHigh = Color.Orange;
 
@@ -42,7 +42,15 @@ namespace ContactPlanner
 
             dataGridViewEvents.Columns.Add(new DataGridViewTextBoxColumn
                 {
-                    DataPropertyName = "Date",
+                    DataPropertyName = "DateAndTime",
+                    HeaderText = "Дата и время",
+                    Width = 103,
+                    Visible = false
+                });
+
+            dataGridViewEvents.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    DataPropertyName = "Time",
                     HeaderText = "Время",
                     Width = 50
                 });
@@ -142,7 +150,9 @@ namespace ContactPlanner
         {
             for (int i = 0; i < m_currentEventsInDataGrid.Count; ++i)
             {
-                if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.Middle)
+                if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.Low)
+                    changeRowColorEventTo(i, m_colorLow);
+                else if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.Middle)
                     changeRowColorEventTo(i, m_colorMiddle);
                 else if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.High)
                     changeRowColorEventTo(i, m_colorHigh);

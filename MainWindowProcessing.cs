@@ -103,6 +103,9 @@ namespace ContactPlanner
 
                 this.Text = "Планировщик. Все события.";
 
+                dataGridViewEvents.Columns[0].Visible = false;
+                dataGridViewEvents.Columns[1].Visible = true;
+
                 m_currentEventsInDataGrid = result;
                 m_bindingEvents.DataSource = m_currentEventsInDataGrid;
                 dataGridViewEvents.DataSource = m_bindingEvents;
@@ -112,6 +115,9 @@ namespace ContactPlanner
             }
             else
             {
+                dataGridViewEvents.Columns[0].Visible = true;
+                dataGridViewEvents.Columns[1].Visible = false;
+
                 buttonShow.Text = "Отобразить все события";
                 updateDataEvents();
             }
