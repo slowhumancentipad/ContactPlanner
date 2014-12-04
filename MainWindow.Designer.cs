@@ -145,11 +145,13 @@
             this.dataGridViewEvents.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Crimson;
             this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewEvents.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dataGridViewEvents.RowTemplate.ReadOnly = true;
             this.dataGridViewEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewEvents.Size = new System.Drawing.Size(491, 287);
             this.dataGridViewEvents.TabIndex = 7;
             this.dataGridViewEvents.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEvents_CellContentDoubleClick);
+            this.dataGridViewEvents.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewEvents_CellMouseClick);
             this.dataGridViewEvents.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewEvents_ColumnHeaderMouseClick);
             // 
             // tabPage2

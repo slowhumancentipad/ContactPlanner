@@ -20,8 +20,10 @@ namespace ContactPlanner
         bool isShowAll = false;
 
         Color m_colorLow = Color.White;
-        Color m_colorMiddle = Color.Orange;
-        Color m_colorHigh = Color.OrangeRed;
+        Color m_colorMiddle = Color.Yellow;
+        Color m_colorHigh = Color.Orange;
+
+        Font m_systemFont = new Font("Microsoft Sans Serif", 8.25f);
 
         public MainWindow(string[] args)
         {

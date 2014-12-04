@@ -14,5 +14,9 @@ namespace ContactPlanner
         static public DateTime LastDate { get; set; }
 
         static public int LastId { get; set; }
+
+        // Последний выбранный индекс в таблице событий
+        // Необходим для корректного выделения/снятия выделения нужной строки
+        static public int LastIndex { get; set; }
     }
 }

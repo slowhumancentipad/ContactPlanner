@@ -332,5 +332,28 @@ namespace ContactPlanner
             m_bindingContacts.DataSource = result;
             m_bindingContacts.ResetBindings(true);
         }
+
+
+        private void dataGridViewEvents_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            for (int i = 0; i < dataGridViewEvents.Rows[Data.LastIndex].Cells.Count; ++i)
+                dataGridViewEvents.Rows[Data.LastIndex].Cells[i].Style.Font = m_systemFont;
+
+            for (int i = 0; i < dataGridViewEvents.Rows[e.RowIndex].Cells.Count; ++i)
+            {
+                dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.Font =
+                    new Font(
+                            m_systemFont
+                        , FontStyle.Bold
+                        );
+
+                dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.SelectionBackColor =
+                    dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.BackColor;
+
+                dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.SelectionForeColor = Color.Black;
+
+                Data.LastIndex = e.RowIndex;
+            }
+        }
     }
 }
