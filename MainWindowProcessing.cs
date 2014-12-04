@@ -9,7 +9,7 @@ namespace ContactPlanner
 {
     public partial class MainWindow : Form
     {
-        private void tabControl_DrawItem(Object sender, System.Windows.Forms.DrawItemEventArgs e)
+        private void tabControl_DrawItem(Object sender, DrawItemEventArgs e)
         {
             Graphics g = e.Graphics;
             Brush _textBrush;
@@ -24,7 +24,7 @@ namespace ContactPlanner
             {
 
                 // Draw a different background color, and don't paint a focus rectangle.
-                _textBrush = new System.Drawing.SolidBrush(Color.Black);
+                _textBrush = new SolidBrush(Color.Black);
                 g.FillRectangle(Brushes.White, e.Bounds);
             }
             else

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace ContactPlanner
 {
@@ -17,6 +18,10 @@ namespace ContactPlanner
         string m_currentPathToDataFile = "data.cpf";
 
         bool isShowAll = false;
+
+        Color m_colorLow = Color.White;
+        Color m_colorMiddle = Color.Orange;
+        Color m_colorHigh = Color.OrangeRed;
 
         public MainWindow(string[] args)
         {
@@ -111,7 +116,9 @@ namespace ContactPlanner
 
             for (int i = 0; i < _list1.Count; ++i)
                 if (_list1[i].getDate().Minute == 0)
-                    _list2.RemoveAt(_list1[i].getDate().Hour);
+                    for (int j = 0; j < _list2.Count; j++)
+                        if (_list1[i].getDate() == _list2[j].getDate())
+                            _list2.RemoveAt(j);
 
             List<Event> tmp = new List<Event>(_list1);
 
@@ -119,6 +126,13 @@ namespace ContactPlanner
             tmp.Sort(compareByTime);
 
             return tmp;
+        }
+
+
+        private void changeRowColorEventTo(int _index, Color _newColor)
+        {
+            for (int i = 0; i < dataGridViewEvents.Rows[_index].Cells.Count; i++)
+                dataGridViewEvents.Rows[_index].Cells[i].Style.BackColor = _newColor;
         }
 
 
@@ -158,6 +172,14 @@ namespace ContactPlanner
             m_bindingEvents.DataSource = m_currentEventsInDataGrid;
             dataGridViewEvents.DataSource = m_bindingEvents;
             m_bindingEvents.ResetBindings(true);
+
+            for (int i = 0; i < m_currentEventsInDataGrid.Count; ++i)
+            {
+                if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.Middle)
+                    changeRowColorEventTo(i, m_colorMiddle);
+                else if (m_currentEventsInDataGrid[i].getPriority() == PriorityKind.High)
+                    changeRowColorEventTo(i, m_colorHigh);
+            }
         }
 
 
