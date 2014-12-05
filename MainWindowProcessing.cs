@@ -112,6 +112,8 @@ namespace ContactPlanner
                 m_bindingEvents.ResetBindings(true);
 
                 changeColorEvents();
+
+                Data.LastIndex = 0;
             }
             else
             {
