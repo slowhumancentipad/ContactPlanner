@@ -64,20 +64,11 @@ namespace ContactPlanner
             if (isShowAll)
                 buttonShow_Click(sender, e);
 
-            dataGridViewEvents_CellMouseClick(
+            dataGridViewEvents_RowStateChanged(
                     this
-                ,   new DataGridViewCellMouseEventArgs(
-                        0
-                    ,   dataGridViewEvents.SelectedRows[0].Index
-                    ,   0
-                    ,   0
-                    ,   new MouseEventArgs(
-                            MouseButtons.Left
-                        ,   0
-                        ,   0
-                        ,   0
-                        ,   0
-                        )
+                ,   new DataGridViewRowStateChangedEventArgs(
+                        dataGridViewEvents.SelectedRows[0]
+                    ,   DataGridViewElementStates.None
                     )
                 );
         }
@@ -97,20 +88,11 @@ namespace ContactPlanner
             updateDataEvents();
             updateBoldedDates(deletedEventDate);
 
-            dataGridViewEvents_CellMouseClick(
+            dataGridViewEvents_RowStateChanged(
                     this
-                ,   new DataGridViewCellMouseEventArgs(
-                        0
-                    ,   dataGridViewEvents.SelectedRows[0].Index
-                    ,   0
-                    ,   0
-                    ,   new MouseEventArgs(
-                            MouseButtons.Left
-                        ,   0
-                        ,   0
-                        ,   0
-                        ,   0
-                        )
+                ,   new DataGridViewRowStateChangedEventArgs(
+                        dataGridViewEvents.SelectedRows[0]
+                    ,   DataGridViewElementStates.None
                     )
                 );
         }
@@ -157,21 +139,12 @@ namespace ContactPlanner
                 buttonShow.Text = "Отобразить все события";
                 updateDataEvents();
             }
-            
-            dataGridViewEvents_CellMouseClick(
+
+            dataGridViewEvents_RowStateChanged(
                     this
-                ,   new DataGridViewCellMouseEventArgs(
-                        0
-                    ,   dataGridViewEvents.SelectedRows[0].Index
-                    ,   0
-                    ,   0
-                    ,   new MouseEventArgs(
-                            MouseButtons.Left
-                        ,   0
-                        ,   0
-                        ,   0
-                        ,   0
-                        )
+                ,   new DataGridViewRowStateChangedEventArgs(
+                        dataGridViewEvents.SelectedRows[0]
+                    ,   DataGridViewElementStates.None
                     )
                 );
         }
@@ -182,20 +155,11 @@ namespace ContactPlanner
             if (tabControl.SelectedIndex == 0)
             {
                 updateDataEvents();
-                dataGridViewEvents_CellMouseClick(
+                dataGridViewEvents_RowStateChanged(
                     this
-                ,   new DataGridViewCellMouseEventArgs(
-                        0
-                    ,   dataGridViewEvents.SelectedRows[0].Index
-                    ,   0
-                    ,   0
-                    ,   new MouseEventArgs(
-                            MouseButtons.Left
-                        ,   0
-                        ,   0
-                        ,   0
-                        ,   0
-                        )
+                ,   new DataGridViewRowStateChangedEventArgs(
+                        dataGridViewEvents.SelectedRows[0]
+                    ,   DataGridViewElementStates.None
                     )
                 );
             }
@@ -246,20 +210,11 @@ namespace ContactPlanner
             updateDataContacts(Data.Contacts);
             updateDataEvents();
 
-            dataGridViewEvents_CellMouseClick(
+            dataGridViewEvents_RowStateChanged(
                     this
-                ,   new DataGridViewCellMouseEventArgs(
-                        0
-                    ,   0
-                    ,   0
-                    ,   0
-                    ,   new MouseEventArgs(
-                            MouseButtons.Left
-                        ,   0
-                        ,   0
-                        ,   0
-                        ,   0
-                        )
+                ,   new DataGridViewRowStateChangedEventArgs(
+                        dataGridViewEvents.Rows[0]
+                    ,   DataGridViewElementStates.None
                     )
                 );
         }
@@ -384,25 +339,19 @@ namespace ContactPlanner
             m_bindingContacts.ResetBindings(true);
         }
 
-
-        private void dataGridViewEvents_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridViewEvents_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
-            if (e.RowIndex == -1)
+            if (Data.LastIndex < dataGridViewEvents.Rows.Count)
+                for (int i = 0; i < dataGridViewEvents.Rows[Data.LastIndex].Cells.Count; ++i)
+                    dataGridViewEvents.Rows[Data.LastIndex].Cells[i].Style.Font = m_systemFont;
+
+            if (e.Row.Index == -1)
                 return;
 
-            for (int i = 0; i < dataGridViewEvents.Rows[Data.LastIndex].Cells.Count; ++i)
-                dataGridViewEvents.Rows[Data.LastIndex].Cells[i].Style.Font = m_systemFont;
+            for (int i = 0; i < dataGridViewEvents.Rows[e.Row.Index].Cells.Count; ++i)
+                dataGridViewEvents.Rows[e.Row.Index].Cells[i].Style.Font = m_boldFont;
 
-            for (int i = 0; i < dataGridViewEvents.Rows[e.RowIndex].Cells.Count; ++i)
-            {
-                dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.Font =
-                    new Font(
-                            m_systemFont
-                        , FontStyle.Bold
-                        );
-
-                Data.LastIndex = e.RowIndex;
-            }
+            Data.LastIndex = e.Row.Index;
         }
     }
 }

@@ -24,12 +24,15 @@ namespace ContactPlanner
         Color m_colorHigh = Color.Orange;
 
         Font m_systemFont = new Font("Microsoft Sans Serif", 8.25f);
+        Font m_boldFont;
 
         public MainWindow(string[] args)
         {
             Data.Contacts = new List<Contact>();
             Data.Events = new Dictionary<DateTime, List<Event>>();
             Data.LastId = 0;
+
+            m_boldFont = new Font(m_systemFont, FontStyle.Bold);
 
             if (args.Length > 1)
                 m_currentPathToDataFile = args[1];
@@ -535,7 +538,6 @@ namespace ContactPlanner
                 throw;
             }
         }
-
 
     }
 

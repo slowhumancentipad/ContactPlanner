@@ -153,7 +153,7 @@
             this.dataGridViewEvents.Size = new System.Drawing.Size(491, 287);
             this.dataGridViewEvents.TabIndex = 7;
             this.dataGridViewEvents.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEvents_CellContentDoubleClick);
-            this.dataGridViewEvents.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewEvents_CellMouseClick);
+            this.dataGridViewEvents.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridViewEvents_RowStateChanged);
             // 
             // tabPage2
             // 
