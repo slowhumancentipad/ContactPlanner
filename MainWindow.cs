@@ -144,7 +144,11 @@ namespace ContactPlanner
         private void changeRowColorEventTo(int _index, Color _newColor)
         {
             for (int i = 0; i < dataGridViewEvents.Rows[_index].Cells.Count; i++)
+            {
                 dataGridViewEvents.Rows[_index].Cells[i].Style.BackColor = _newColor;
+                dataGridViewEvents.Rows[_index].Cells[i].Style.SelectionBackColor = _newColor;
+                dataGridViewEvents.Rows[_index].Cells[i].Style.SelectionForeColor = Color.Black;
+            }
         }
 
 

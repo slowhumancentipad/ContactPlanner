@@ -96,6 +96,23 @@ namespace ContactPlanner
 
             updateDataEvents();
             updateBoldedDates(deletedEventDate);
+
+            dataGridViewEvents_CellMouseClick(
+                    this
+                ,   new DataGridViewCellMouseEventArgs(
+                        0
+                    ,   dataGridViewEvents.SelectedRows[0].Index
+                    ,   0
+                    ,   0
+                    ,   new MouseEventArgs(
+                            MouseButtons.Left
+                        ,   0
+                        ,   0
+                        ,   0
+                        ,   0
+                        )
+                    )
+                );
         }
 
 
@@ -169,7 +186,7 @@ namespace ContactPlanner
                     this
                 ,   new DataGridViewCellMouseEventArgs(
                         0
-                    ,   0
+                    ,   dataGridViewEvents.SelectedRows[0].Index
                     ,   0
                     ,   0
                     ,   new MouseEventArgs(
@@ -383,11 +400,6 @@ namespace ContactPlanner
                             m_systemFont
                         , FontStyle.Bold
                         );
-
-                dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.SelectionBackColor =
-                    dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.BackColor;
-
-                dataGridViewEvents.Rows[e.RowIndex].Cells[i].Style.SelectionForeColor = Color.Black;
 
                 Data.LastIndex = e.RowIndex;
             }
