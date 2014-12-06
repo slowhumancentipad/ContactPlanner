@@ -102,16 +102,14 @@ namespace ContactPlanner
             if (!Data.Events.ContainsKey(dateTimePicker.Value.Date))
                 Data.Events.Add(dateTimePicker.Value.Date, new List<Event>());
 
-            // Если произошли изменения в дате и заголовке
-            if (m_currentEvent.Header != textBoxHeader.Text ||
-                m_currentEvent.getDate() != dateTimePicker.Value)
+            // Если произошли изменения в дате 
+            if (m_currentEvent.getDate() != dateTimePicker.Value)
             {
                 foreach (var _event in Data.Events[dateTimePicker.Value.Date])
                 {
-                    if (_event.getDate() == dateTimePicker.Value &&
-                        _event.Header == textBoxHeader.Text)
+                    if(_event.getDate() == dateTimePicker.Value)
                     {
-                        MessageBox.Show("Событие с такими же датой и заголовком уже существует!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Событие с такой же датой уже существует!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }
