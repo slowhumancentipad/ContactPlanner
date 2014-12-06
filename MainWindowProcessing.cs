@@ -63,6 +63,23 @@ namespace ContactPlanner
 
             if (isShowAll)
                 buttonShow_Click(sender, e);
+
+            dataGridViewEvents_CellMouseClick(
+                    this
+                ,   new DataGridViewCellMouseEventArgs(
+                        0
+                    ,   dataGridViewEvents.SelectedRows[0].Index
+                    ,   0
+                    ,   0
+                    ,   new MouseEventArgs(
+                            MouseButtons.Left
+                        ,   0
+                        ,   0
+                        ,   0
+                        ,   0
+                        )
+                    )
+                );
         }
 
 
@@ -128,7 +145,7 @@ namespace ContactPlanner
                     this
                 ,   new DataGridViewCellMouseEventArgs(
                         0
-                    ,   0
+                    ,   dataGridViewEvents.SelectedRows[0].Index
                     ,   0
                     ,   0
                     ,   new MouseEventArgs(
@@ -146,7 +163,25 @@ namespace ContactPlanner
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl.SelectedIndex == 0)
+            {
                 updateDataEvents();
+                dataGridViewEvents_CellMouseClick(
+                    this
+                ,   new DataGridViewCellMouseEventArgs(
+                        0
+                    ,   0
+                    ,   0
+                    ,   0
+                    ,   new MouseEventArgs(
+                            MouseButtons.Left
+                        ,   0
+                        ,   0
+                        ,   0
+                        ,   0
+                        )
+                    )
+                );
+            }
             else if (tabControl.SelectedIndex == 1)
                 updateDataContacts(Data.Contacts);
 
@@ -282,49 +317,6 @@ namespace ContactPlanner
         }
 
 
-        private void dataGridViewEvents_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            List<Event> result = new List<Event>();
-
-            if (e.ColumnIndex == 0)
-            {
-                result = (
-                    from _event in m_currentEventsInDataGrid
-                    orderby _event.getDate().ToBinary() ascending
-                    select _event
-                    ).ToList<Event>();
-            }
-            else if (e.ColumnIndex == 1)
-            {
-                result = (
-                    from _event in m_currentEventsInDataGrid
-                    orderby _event.Header ascending
-                    select _event
-                    ).ToList<Event>();
-            }
-            else if (e.ColumnIndex == 2)
-            {
-                result = (
-                    from _event in m_currentEventsInDataGrid
-                    orderby _event.Description ascending
-                    select _event
-                    ).ToList<Event>();
-            }
-            else
-            {
-                result = (
-                    from _event in m_currentEventsInDataGrid
-                    orderby EventWindow.priorityToIndex(_event.getPriority()) ascending
-                    select _event
-                    ).ToList<Event>();
-            }
-
-            m_currentEventsInDataGrid = result; // Для корректной работы редактирования
-            m_bindingEvents.DataSource = result;
-            m_bindingEvents.ResetBindings(true);
-        }
-
-
         private void dataGridViewContacts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             List<Contact> result = new List<Contact>();
@@ -378,6 +370,9 @@ namespace ContactPlanner
 
         private void dataGridViewEvents_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
+
             for (int i = 0; i < dataGridViewEvents.Rows[Data.LastIndex].Cells.Count; ++i)
                 dataGridViewEvents.Rows[Data.LastIndex].Cells[i].Style.Font = m_systemFont;
 

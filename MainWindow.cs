@@ -532,6 +532,7 @@ namespace ContactPlanner
             }
         }
 
+
     }
 
     public class ReadDataException : Exception
