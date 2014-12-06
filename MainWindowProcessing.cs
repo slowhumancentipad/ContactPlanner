@@ -123,6 +123,23 @@ namespace ContactPlanner
                 buttonShow.Text = "Отобразить все события";
                 updateDataEvents();
             }
+            
+            dataGridViewEvents_CellMouseClick(
+                    this
+                ,   new DataGridViewCellMouseEventArgs(
+                        0
+                    ,   0
+                    ,   0
+                    ,   0
+                    ,   new MouseEventArgs(
+                            MouseButtons.Left
+                        ,   0
+                        ,   0
+                        ,   0
+                        ,   0
+                        )
+                    )
+                );
         }
 
 
@@ -176,6 +193,23 @@ namespace ContactPlanner
 
             updateDataContacts(Data.Contacts);
             updateDataEvents();
+
+            dataGridViewEvents_CellMouseClick(
+                    this
+                ,   new DataGridViewCellMouseEventArgs(
+                        0
+                    ,   0
+                    ,   0
+                    ,   0
+                    ,   new MouseEventArgs(
+                            MouseButtons.Left
+                        ,   0
+                        ,   0
+                        ,   0
+                        ,   0
+                        )
+                    )
+                );
         }
 
 

@@ -110,6 +110,8 @@ namespace ContactPlanner
 
             #endregion // AddDataGridContactsColumn
 
+            Data.LastIndex = 0;
+
         }
 
 
