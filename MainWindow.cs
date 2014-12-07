@@ -246,12 +246,28 @@ namespace ContactPlanner
                 }
                 else
                 {
+                    buttonDeleteEvent.Enabled = true;
                     monthCalendar.AddBoldedDate(_currentDate);
-                    
                 }
 
                 monthCalendar.UpdateBoldedDates();
             }
+        }
+
+
+        private void removeEmptyDays()
+        {
+            DateTime[] removedDates = new DateTime[Data.Events.Count];
+            int index = 0;
+
+            foreach (var _pair in Data.Events)
+            {
+                if (_pair.Value.Count == 0)
+                    removedDates[index++] = _pair.Key;
+            }
+
+            for (int i = 0; i < index; i++)
+                Data.Events.Remove(removedDates[i]);
         }
 
 
@@ -538,7 +554,6 @@ namespace ContactPlanner
                 throw;
             }
         }
-
     }
 
     public class ReadDataException : Exception

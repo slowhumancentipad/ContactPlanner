@@ -154,6 +154,7 @@
             this.dataGridViewEvents.TabIndex = 7;
             this.dataGridViewEvents.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewEvents_CellContentDoubleClick);
             this.dataGridViewEvents.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dataGridViewEvents_RowStateChanged);
+            this.dataGridViewEvents.SelectionChanged += new System.EventHandler(this.dataGridViewEvents_SelectionChanged);
             // 
             // tabPage2
             // 

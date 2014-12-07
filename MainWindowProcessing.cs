@@ -82,11 +82,13 @@ namespace ContactPlanner
             Event selectedEvent = m_currentEventsInDataGrid[dataGridViewEvents.CurrentRow.Index];
 
             Data.Events[selectedEvent.getDate().Date].Remove(selectedEvent);
-            DateTime deletedEventDate = selectedEvent.getDate();
+            DateTime deletedEventDate = selectedEvent.getDate().Date;
             m_currentEventsInDataGrid.Remove(selectedEvent);
 
             updateDataEvents();
             updateBoldedDates(deletedEventDate);
+
+            removeEmptyDays();
 
             dataGridViewEvents_RowStateChanged(
                     this
@@ -191,6 +193,7 @@ namespace ContactPlanner
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
+            removeEmptyDays();
             saveData(m_currentPathToDataFile);
         }
 
@@ -228,6 +231,7 @@ namespace ContactPlanner
             updateBoldedDates(Data.LastDate);
             m_bindingEvents.ResetBindings(true);
             changeColorEvents();
+            removeEmptyDays();
         }
 
 
@@ -351,6 +355,14 @@ namespace ContactPlanner
                 dataGridViewEvents.Rows[e.Row.Index].Cells[i].Style.Font = m_boldFont;
 
             Data.LastIndex = e.Row.Index;
+        }
+
+        private void dataGridViewEvents_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewEvents.SelectedRows.Count != 0)
+                buttonDeleteEvent.Enabled =
+                    m_currentEventsInDataGrid[dataGridViewEvents.SelectedRows[0].Index].getPriority() !=
+                    PriorityKind.Unspecified;
         }
     }
 }
