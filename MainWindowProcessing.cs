@@ -12,42 +12,62 @@ namespace ContactPlanner
         private void tabControl_DrawItem(Object sender, DrawItemEventArgs e)
         {
             Graphics g = e.Graphics;
-            Brush _textBrush;
+            Brush textBrush;
 
             // Get the item from the collection.
-            TabPage _tabPage = tabControl.TabPages[e.Index];
+            TabPage tabPage = tabControl.TabPages[e.Index];
 
             // Get the real bounds for the tab rectangle.
-            Rectangle _tabBounds = tabControl.GetTabRect(e.Index);
+            Rectangle tabBounds = tabControl.GetTabRect(e.Index);
 
             if (e.State == DrawItemState.Selected)
             {
-
                 // Draw a different background color, and don't paint a focus rectangle.
-                _textBrush = new SolidBrush(Color.Black);
+                textBrush = new SolidBrush(Color.Black);
                 g.FillRectangle(Brushes.White, e.Bounds);
             }
             else
             {
-                _textBrush = new SolidBrush(Color.White);
+                textBrush = new SolidBrush(Color.White);
                 g.FillRectangle(Brushes.Crimson, e.Bounds);
 
             }
 
             // Use our own font.
-            Font _tabFont = new Font("Verdana", (float)16.0, FontStyle.Regular, GraphicsUnit.Pixel);
+            Font tabFont = new Font(
+                    "Verdana"
+                ,   16.0f
+                ,   FontStyle.Regular
+                ,   GraphicsUnit.Pixel
+                );
 
             // Draw string. Center the text.
-            StringFormat _stringFlags = new StringFormat();
-            _stringFlags.Alignment = StringAlignment.Center;
-            _stringFlags.LineAlignment = StringAlignment.Center;
-            g.DrawString(_tabPage.Text, _tabFont, _textBrush, _tabBounds, new StringFormat(_stringFlags));
+            StringFormat stringFlags = new StringFormat();
+            stringFlags.Alignment = StringAlignment.Center;
+            stringFlags.LineAlignment = StringAlignment.Center;
+            g.DrawString(
+                    tabPage.Text
+                ,   tabFont
+                ,   textBrush
+                ,   tabBounds
+                ,   new StringFormat(stringFlags)
+                );
         }
 
 
         private void buttonCreateEvent_Click(object sender, EventArgs e)
         {
-            Form addEvent = new EventWindow(new Event(new DateTime(monthCalendar.SelectionStart.Ticks), "", "", new List<Contact>(), PriorityKind.Low, ++Data.LastId));
+            Form addEvent = new EventWindow(
+                new Event(
+                        new DateTime(monthCalendar.SelectionStart.Ticks)
+                    ,   ""
+                    ,   ""
+                    ,   new List<Contact>()
+                    ,   PriorityKind.Low
+                    ,   ++Data.LastId
+                    )
+                );
+
             addEvent.ShowDialog(this);
             updateBoldedDates(Data.LastDate);
             updateDataEvents();
@@ -79,7 +99,8 @@ namespace ContactPlanner
             if (dataGridViewEvents.CurrentRow.Index == -1)
                 return;
 
-            Event selectedEvent = m_currentEventsInDataGrid[dataGridViewEvents.CurrentRow.Index];
+            Event selectedEvent = 
+                m_currentEventsInDataGrid[dataGridViewEvents.CurrentRow.Index];
 
             Data.Events[selectedEvent.getDate().Date].Remove(selectedEvent);
             DateTime deletedEventDate = selectedEvent.getDate().Date;
@@ -180,7 +201,8 @@ namespace ContactPlanner
 
         private void buttonDeleteContact_Click(object sender, EventArgs e)
         {
-            Contact contactDeleted = Data.Contacts[dataGridViewContacts.CurrentRow.Index];
+            Contact contactDeleted = 
+                Data.Contacts[dataGridViewContacts.CurrentRow.Index];
 
             foreach (var _pair in Data.Events)
                 foreach(var _event in _pair.Value)
@@ -204,7 +226,7 @@ namespace ContactPlanner
 
             foreach (var _pair in Data.Events)
                 if(_pair.Value.Count != 0)
-                monthCalendar.AddBoldedDate(_pair.Key);
+                    monthCalendar.AddBoldedDate(_pair.Key);
 
             monthCalendar.UpdateBoldedDates();
 
@@ -221,12 +243,16 @@ namespace ContactPlanner
         }
 
 
-        private void dataGridViewEvents_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewEvents_CellContentDoubleClick(
+                object sender
+            ,   DataGridViewCellEventArgs e
+            )
         {
             if (e.RowIndex == -1)
                 return;
 
-            Form editEvent = new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
+            Form editEvent = 
+                new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
             updateBoldedDates(Data.LastDate);
             m_bindingEvents.ResetBindings(true);
@@ -235,12 +261,16 @@ namespace ContactPlanner
         }
 
 
-        private void dataGridViewContacts_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewContacts_CellContentDoubleClick(
+                object sender
+            ,   DataGridViewCellEventArgs e
+            )
         {
             if (e.RowIndex == -1)
                 return;
 
-            Form editContact = new ContactWindow(m_currentContactsInDataGrid[e.RowIndex]);
+            Form editContact = 
+                new ContactWindow(m_currentContactsInDataGrid[e.RowIndex]);
             editContact.ShowDialog(this);
             updateDataContacts(Data.Contacts);
             textBoxSearch.Text = "<Введите текст для поиска среди контактов>";
@@ -272,7 +302,8 @@ namespace ContactPlanner
 
         private void toolStripMenuSave_Click(object sender, EventArgs e)
         {
-            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            saveFileDialog.InitialDirectory = 
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_currentPathToDataFile = saveFileDialog.FileName;
@@ -283,7 +314,8 @@ namespace ContactPlanner
 
         private void toolStripMenuLoad_Click(object sender, EventArgs e)
         {
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.InitialDirectory = 
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 m_currentPathToDataFile = openFileDialog.FileName;
@@ -292,7 +324,10 @@ namespace ContactPlanner
         }
 
 
-        private void dataGridViewContacts_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridViewContacts_ColumnHeaderMouseClick(
+                object sender
+            ,   DataGridViewCellMouseEventArgs e
+            )
         {
             List<Contact> result = new List<Contact>();
 
@@ -342,7 +377,10 @@ namespace ContactPlanner
             m_bindingContacts.ResetBindings(true);
         }
 
-        private void dataGridViewEvents_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        private void dataGridViewEvents_RowStateChanged(
+                object sender
+            ,   DataGridViewRowStateChangedEventArgs e
+            )
         {
             if (Data.LastIndex < dataGridViewEvents.Rows.Count)
                 for (int i = 0; i < dataGridViewEvents.Rows[Data.LastIndex].Cells.Count; ++i)
@@ -357,11 +395,17 @@ namespace ContactPlanner
             Data.LastIndex = e.Row.Index;
         }
 
-        private void dataGridViewEvents_SelectionChanged(object sender, EventArgs e)
+        private void dataGridViewEvents_SelectionChanged(
+                object sender
+            ,   EventArgs e
+            )
         {
             if (dataGridViewEvents.SelectedRows.Count != 0)
                 buttonDeleteEvent.Enabled =
-                    m_currentEventsInDataGrid[dataGridViewEvents.SelectedRows[0].Index].getPriority() !=
+                    m_currentEventsInDataGrid[
+                        dataGridViewEvents.SelectedRows[0].Index
+                        ]
+                    .getPriority() !=
                     PriorityKind.Unspecified;
         }
     }

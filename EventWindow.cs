@@ -20,7 +20,8 @@ namespace ContactPlanner
             updateContactList();
 
             dateTimePicker.Value = m_currentEvent.getDate();
-            comboBoxPriority.SelectedIndex = priorityToIndex(m_currentEvent.getPriority());
+            comboBoxPriority.SelectedIndex = 
+                priorityToIndex(m_currentEvent.getPriority());
             textBoxHeader.Text = m_currentEvent.Header;
             textBoxDescription.Text = m_currentEvent.Description;
         }
@@ -31,7 +32,9 @@ namespace ContactPlanner
             listContacts.Items.Clear();
 
             foreach (var _contact in m_currentEvent.Contacts)
-                listContacts.Items.Add(_contact.FirstName + " " + _contact.LastName);
+                listContacts.Items.Add(
+                    _contact.FirstName + " " + _contact.LastName
+                    );
 
             listContacts.Items.Add("<Кликните на список, чтобы добавить>");
         }
@@ -72,13 +75,23 @@ namespace ContactPlanner
         {
             if(textBoxDescription.Text.Length == 0)
             {
-                MessageBox.Show("Поле \"Описание\" осталось пустым!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                        "Поле \"Описание\" осталось пустым!"
+                    ,   "Ошибка!"
+                    ,   MessageBoxButtons.OK
+                    ,   MessageBoxIcon.Error
+                    );
                 return;
             }
 
             if(dateTimePicker.Value.Date.CompareTo(System.DateTime.Now.Date) < 0)
             {
-                MessageBox.Show("Выбрана дата из прошлого!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                        "Выбрана дата из прошлого!"
+                    ,   "Ошибка!"
+                    ,   MessageBoxButtons.OK
+                    ,   MessageBoxIcon.Error
+                    );
                 return;
             }
 
@@ -109,7 +122,12 @@ namespace ContactPlanner
                 {
                     if(_event.getDate() == dateTimePicker.Value)
                     {
-                        MessageBox.Show("Событие с такой же датой уже существует!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(
+                                "Событие с такой же датой уже существует!"
+                            ,   "Ошибка!"
+                            ,   MessageBoxButtons.OK
+                            ,   MessageBoxIcon.Error
+                            );
                         return;
                     }
                 }
@@ -117,19 +135,26 @@ namespace ContactPlanner
 
             if (Data.Events[dateTimePicker.Value.Date].Contains(m_currentEvent))
             {
-                int indexEdited = Data.Events[dateTimePicker.Value.Date].IndexOf(m_currentEvent);
+                int indexEdited = 
+                    Data.Events[dateTimePicker.Value.Date].IndexOf(m_currentEvent);
 
-                Data.Events[dateTimePicker.Value.Date][indexEdited].setDate(dateTimePicker.Value);
-                Data.Events[dateTimePicker.Value.Date][indexEdited].Header = textBoxHeader.Text;
-                Data.Events[dateTimePicker.Value.Date][indexEdited].Description = textBoxDescription.Text;
-                Data.Events[dateTimePicker.Value.Date][indexEdited].setPriority(indexToPriority(comboBoxPriority.SelectedIndex));
+                Data.Events[dateTimePicker.Value.Date][indexEdited]
+                    .setDate(dateTimePicker.Value);
+                Data.Events[dateTimePicker.Value.Date][indexEdited]
+                    .Header = textBoxHeader.Text;
+                Data.Events[dateTimePicker.Value.Date][indexEdited]
+                    .Description = textBoxDescription.Text;
+                Data.Events[dateTimePicker.Value.Date][indexEdited]
+                    .setPriority(indexToPriority(comboBoxPriority.SelectedIndex));
             }
             else
             {
                 m_currentEvent.setDate(dateTimePicker.Value);
                 m_currentEvent.Header = textBoxHeader.Text;
                 m_currentEvent.Description = textBoxDescription.Text;
-                m_currentEvent.setPriority(indexToPriority(comboBoxPriority.SelectedIndex));
+                m_currentEvent.setPriority(
+                    indexToPriority(comboBoxPriority.SelectedIndex)
+                    );
 
                 Data.Events[dateTimePicker.Value.Date].Add(m_currentEvent);
             }

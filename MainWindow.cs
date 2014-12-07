@@ -183,13 +183,17 @@ namespace ContactPlanner
                 timeForEmptyList = timeForEmptyList.AddHours(1);
             }
 
-            this.Text = "Планировщик. Текущая дата: " + monthCalendar.SelectionStart.ToShortDateString();
+            this.Text = 
+                "Планировщик. Текущая дата: " + 
+                monthCalendar.SelectionStart.ToShortDateString();
 
             if (Data.Events.ContainsKey(monthCalendar.SelectionStart))
             {
-                m_currentEventsInDataGrid = Data.Events[monthCalendar.SelectionStart];
+                m_currentEventsInDataGrid = 
+                    Data.Events[monthCalendar.SelectionStart];
 
-                m_currentEventsInDataGrid = mergeEventList(m_currentEventsInDataGrid, emptyTimeList);
+                m_currentEventsInDataGrid = 
+                    mergeEventList(m_currentEventsInDataGrid, emptyTimeList);
 
                 if (Data.Events[monthCalendar.SelectionStart].Count != 0)
                     buttonDeleteEvent.Enabled = true;
@@ -279,7 +283,10 @@ namespace ContactPlanner
                 result = Data.Contacts;
             else
             {
-                var searchedStrings = _searchedStr.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                var searchedStrings = 
+                        _searchedStr.Split(new string[] { " " }
+                    ,   StringSplitOptions.RemoveEmptyEntries
+                    );
 
                 foreach (var _contact in Data.Contacts)
                 {
@@ -340,7 +347,9 @@ namespace ContactPlanner
                     binWriter.Write(_event.Description);// Сохраняем описание
 
                     binWriter.Write("PRIORITY");
-                    binWriter.Write(Convert.ToString(EventWindow.priorityToIndex(_event.getPriority())));   // Сохраняем приоритет
+                    binWriter.Write(Convert.ToString(
+                        EventWindow.priorityToIndex(_event.getPriority()))
+                        );   // Сохраняем приоритет
 
                     binWriter.Write("EVENTCONTACTS");
                     saveContacts(_event.Contacts, binWriter);// Сохраняем контакты
@@ -475,7 +484,13 @@ namespace ContactPlanner
             }
             catch(ReadDataException)
             {
-                MessageBox.Show("Файл данных поврежден! Чтение невозможно!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                        "Файл данных поврежден! Чтение невозможно!"
+                    ,   "Ошибка!"
+                    ,   MessageBoxButtons.OK
+                    ,   MessageBoxIcon.Error
+                    );
+
                 binReader.Close(); // "Аварийное" закрытие потока 
 
                 // Чистим то, что успело восстановиться до возникновения ошибки
@@ -486,7 +501,12 @@ namespace ContactPlanner
             }
             catch(Exception _e)
             {
-                MessageBox.Show(_e.StackTrace, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                        _e.StackTrace
+                    ,   "Error!"
+                    ,   MessageBoxButtons.OK
+                    ,   MessageBoxIcon.Error
+                    );
                 binReader.Close(); // "Аварийное" закрытие потока 
 
                 // Чистим то, что успело восстановиться до возникновения ошибки
@@ -548,7 +568,7 @@ namespace ContactPlanner
                 // Передаем управление вызвавшему методу
                 throw;
             }
-            catch(Exception)
+            catch
             {
                 // Передаем управление вызвавшему методу
                 throw;

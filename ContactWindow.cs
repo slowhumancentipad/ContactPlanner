@@ -32,19 +32,34 @@ namespace ContactPlanner
                 if(textBoxEmail.Text.Length == 0 &&
                     maskedTextBoxTelephone.Text == "(   )    -")
                 {
-                    MessageBox.Show("Поля \"Телефон\" либо \"E-Mail\" обязательны к заполнению!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                            "Поля \"Телефон\" либо \"E-Mail\" обязательны к заполнению!"
+                        ,   "Ошибка!"
+                        ,   MessageBoxButtons.OK
+                        ,   MessageBoxIcon.Error
+                        );
                     return;
                 }
             }
             else
             {
-                MessageBox.Show("Поле \"Имя\" обязательно к заполнению!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                        "Поле \"Имя\" обязательно к заполнению!"
+                    ,   "Ошибка!"
+                    ,   MessageBoxButtons.OK
+                    ,   MessageBoxIcon.Error
+                    );
                 return;
             }
 
             if(!isValidEmail(textBoxEmail.Text))
             {
-                MessageBox.Show("Вы ввели некорректный E-Mail!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                        "Вы ввели некорректный E-Mail!"
+                    ,   "Ошибка!"
+                    ,   MessageBoxButtons.OK
+                    ,   MessageBoxIcon.Error
+                    );
                 return;
             }
 
@@ -55,7 +70,12 @@ namespace ContactPlanner
                    (maskedTextBoxTelephone.Text == _contact.Telephone &&
                    textBoxEmail.Text == _contact.Email))
                 {
-                    MessageBox.Show("Контакты должы быть уникальными!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                            "Контакты должы быть уникальными!"
+                        ,   "Ошибка!"
+                        ,   MessageBoxButtons.OK
+                        ,   MessageBoxIcon.Error
+                        );
                     return;
                 }
 
@@ -110,7 +130,8 @@ namespace ContactPlanner
 
         private bool isValidEmail(string _mail)
         {
-            if (!Char.IsLetterOrDigit(_mail, 0) || !Char.IsLetterOrDigit(_mail, _mail.Length - 1))
+            if (!Char.IsLetterOrDigit(_mail, 0) || 
+                !Char.IsLetterOrDigit(_mail, _mail.Length - 1))
                 return false;
 
             string allowedChar = "";

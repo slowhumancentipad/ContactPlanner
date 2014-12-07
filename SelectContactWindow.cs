@@ -42,10 +42,14 @@ namespace ContactPlanner
             }
 
             foreach (var _contact in m_listAll)
-                listViewAll.Items.Add(_contact.FirstName + ' ' + _contact.LastName);
+                listViewAll.Items.Add(
+                    _contact.FirstName + ' ' + _contact.LastName
+                    );
 
             foreach (var _contact in m_listUser)
-                listViewSelected.Items.Add(_contact.FirstName + ' ' + _contact.LastName);
+                listViewSelected.Items.Add(
+                    _contact.FirstName + ' ' + _contact.LastName
+                    );
         }
 
 
