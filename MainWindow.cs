@@ -169,11 +169,8 @@ namespace ContactPlanner
         }
 
 
-        private void updateDataEvents()
+        private List<Event> newEmptyEventList()
         {
-
-            Data.CurrentDate = monthCalendar.SelectionStart;
-
             List<Event> emptyTimeList = new List<Event>();
             DateTime timeForEmptyList = Data.CurrentDate.Date;
 
@@ -182,6 +179,15 @@ namespace ContactPlanner
                 emptyTimeList.Add(new Event(timeForEmptyList));
                 timeForEmptyList = timeForEmptyList.AddHours(1);
             }
+
+            return emptyTimeList;
+        }
+
+
+        private void updateDataEvents()
+        {
+
+            Data.CurrentDate = monthCalendar.SelectionStart;
 
             this.Text = 
                 "Планировщик. Текущая дата: " + 
@@ -193,7 +199,7 @@ namespace ContactPlanner
                     Data.Events[monthCalendar.SelectionStart];
 
                 m_currentEventsInDataGrid = 
-                    mergeEventList(m_currentEventsInDataGrid, emptyTimeList);
+                    mergeEventList(m_currentEventsInDataGrid, newEmptyEventList());
 
                 if (Data.Events[monthCalendar.SelectionStart].Count != 0)
                     buttonDeleteEvent.Enabled = true;
@@ -202,7 +208,7 @@ namespace ContactPlanner
             }
             else
             {
-                m_currentEventsInDataGrid = emptyTimeList;
+                m_currentEventsInDataGrid = newEmptyEventList();
                 buttonDeleteEvent.Enabled = false;
             }
 

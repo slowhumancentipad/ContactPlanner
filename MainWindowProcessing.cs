@@ -161,13 +161,14 @@ namespace ContactPlanner
                 updateDataEvents();
             }
 
-            dataGridViewEvents_RowStateChanged(
-                    this
-                ,   new DataGridViewRowStateChangedEventArgs(
-                        dataGridViewEvents.SelectedRows[0]
-                    ,   DataGridViewElementStates.None
-                    )
-                );
+            if (dataGridViewEvents.SelectedRows.Count != 0)
+                dataGridViewEvents_RowStateChanged(
+                        this
+                    ,   new DataGridViewRowStateChangedEventArgs(
+                            dataGridViewEvents.SelectedRows[0]
+                        ,   DataGridViewElementStates.None
+                        )
+                    );
         }
 
 
@@ -255,6 +256,8 @@ namespace ContactPlanner
                 new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
             updateBoldedDates(Data.LastDate);
+            m_currentEventsInDataGrid = mergeEventList(Data.Events[monthCalendar.SelectionStart], newEmptyEventList());
+            m_bindingEvents.DataSource = m_currentEventsInDataGrid;
             m_bindingEvents.ResetBindings(true);
             changeColorEvents();
             removeEmptyDays();

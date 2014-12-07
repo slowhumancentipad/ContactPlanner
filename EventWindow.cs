@@ -96,21 +96,7 @@ namespace ContactPlanner
             }
 
             if (textBoxHeader.Text.Length == 0)
-            {
-                if (textBoxDescription.Text.Length < MIN_SYMBOLS)
-                    textBoxHeader.Text = textBoxDescription.Text;
-                else
-                {
-                    StringBuilder strBuild = new StringBuilder();
-
-                    for (int i = 0; i < MIN_SYMBOLS; ++i)
-                        strBuild.Append(textBoxDescription.Text[i]);
-
-                    strBuild.Append("...");
-
-                    textBoxHeader.Text = strBuild.ToString();
-                }
-            }
+                textBoxHeader.Text = "<Нет темы>";
 
             if (!Data.Events.ContainsKey(dateTimePicker.Value.Date))
                 Data.Events.Add(dateTimePicker.Value.Date, new List<Event>());
