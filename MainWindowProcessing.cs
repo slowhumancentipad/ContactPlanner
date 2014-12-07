@@ -128,8 +128,6 @@ namespace ContactPlanner
                 m_bindingEvents.ResetBindings(true);
 
                 changeColorEvents();
-
-                Data.LastIndex = 0;
             }
             else
             {
@@ -228,7 +226,8 @@ namespace ContactPlanner
             Form editEvent = new EventWindow(m_currentEventsInDataGrid[e.RowIndex]);
             editEvent.ShowDialog(this);
             updateBoldedDates(Data.LastDate);
-            updateDataEvents();
+            m_bindingEvents.ResetBindings(true);
+            changeColorEvents();
         }
 
 

@@ -7,6 +7,8 @@ namespace ContactPlanner
 {
     public partial class EventWindow : Form
     {
+        const int MIN_SYMBOLS = 20;
+
         Event m_currentEvent;
 
         public EventWindow(Event _newEvent)
@@ -78,6 +80,23 @@ namespace ContactPlanner
             {
                 MessageBox.Show("Выбрана дата из прошлого!", "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+
+            if (textBoxHeader.Text.Length == 0)
+            {
+                if (textBoxDescription.Text.Length < MIN_SYMBOLS)
+                    textBoxHeader.Text = textBoxDescription.Text;
+                else
+                {
+                    StringBuilder strBuild = new StringBuilder();
+
+                    for (int i = 0; i < MIN_SYMBOLS; ++i)
+                        strBuild.Append(textBoxDescription.Text[i]);
+
+                    strBuild.Append("...");
+
+                    textBoxHeader.Text = strBuild.ToString();
+                }
             }
 
             if (!Data.Events.ContainsKey(dateTimePicker.Value.Date))
