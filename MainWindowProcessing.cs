@@ -30,7 +30,6 @@ namespace ContactPlanner
             {
                 textBrush = new SolidBrush(Color.White);
                 g.FillRectangle(Brushes.Crimson, e.Bounds);
-
             }
 
             // Use our own font.

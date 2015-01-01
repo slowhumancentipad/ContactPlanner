@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonShow = new System.Windows.Forms.Button();
@@ -49,6 +49,9 @@
             this.toolStripMenuLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.параметрыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.выходToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEvents)).BeginInit();
@@ -59,7 +62,7 @@
             // 
             // tabControl
             // 
-            this.tabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.tabControl.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -82,10 +85,10 @@
             this.tabPage1.Controls.Add(this.buttonCreateEvent);
             this.tabPage1.Controls.Add(this.monthCalendar);
             this.tabPage1.Controls.Add(this.dataGridViewEvents);
-            this.tabPage1.Location = new System.Drawing.Point(4, 4);
+            this.tabPage1.Location = new System.Drawing.Point(29, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(673, 299);
+            this.tabPage1.Size = new System.Drawing.Size(648, 324);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "События";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -145,8 +148,8 @@
             this.dataGridViewEvents.ReadOnly = true;
             this.dataGridViewEvents.RowHeadersVisible = false;
             this.dataGridViewEvents.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.dataGridViewEvents.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewEvents.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dataGridViewEvents.RowTemplate.ReadOnly = true;
             this.dataGridViewEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -163,10 +166,10 @@
             this.tabPage2.Controls.Add(this.buttonAddContact);
             this.tabPage2.Controls.Add(this.buttonDeleteContact);
             this.tabPage2.Controls.Add(this.dataGridViewContacts);
-            this.tabPage2.Location = new System.Drawing.Point(4, 4);
+            this.tabPage2.Location = new System.Drawing.Point(29, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(673, 299);
+            this.tabPage2.Size = new System.Drawing.Size(648, 324);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Контакты";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -223,8 +226,8 @@
             this.dataGridViewContacts.ReadOnly = true;
             this.dataGridViewContacts.RowHeadersVisible = false;
             this.dataGridViewContacts.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Crimson;
-            this.dataGridViewContacts.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Crimson;
+            this.dataGridViewContacts.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewContacts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewContacts.Size = new System.Drawing.Size(661, 255);
             this.dataGridViewContacts.TabIndex = 6;
@@ -234,7 +237,8 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuFile});
+            this.toolStripMenuFile,
+            this.параметрыToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(700, 24);
@@ -245,7 +249,9 @@
             // 
             this.toolStripMenuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuSave,
-            this.toolStripMenuLoad});
+            this.toolStripMenuLoad,
+            this.toolStripSeparator1,
+            this.выходToolStripMenuItem});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
             this.toolStripMenuFile.Size = new System.Drawing.Size(48, 20);
             this.toolStripMenuFile.Text = "Файл";
@@ -253,14 +259,14 @@
             // toolStripMenuSave
             // 
             this.toolStripMenuSave.Name = "toolStripMenuSave";
-            this.toolStripMenuSave.Size = new System.Drawing.Size(132, 22);
+            this.toolStripMenuSave.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuSave.Text = "Сохранить";
             this.toolStripMenuSave.Click += new System.EventHandler(this.toolStripMenuSave_Click);
             // 
             // toolStripMenuLoad
             // 
             this.toolStripMenuLoad.Name = "toolStripMenuLoad";
-            this.toolStripMenuLoad.Size = new System.Drawing.Size(132, 22);
+            this.toolStripMenuLoad.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuLoad.Text = "Загрузить";
             this.toolStripMenuLoad.Click += new System.EventHandler(this.toolStripMenuLoad_Click);
             // 
@@ -277,6 +283,23 @@
             this.openFileDialog.FileName = "data";
             this.openFileDialog.Filter = "ContactPlanner files (*.cpf)|*.cpf";
             this.openFileDialog.RestoreDirectory = true;
+            // 
+            // параметрыToolStripMenuItem
+            // 
+            this.параметрыToolStripMenuItem.Name = "параметрыToolStripMenuItem";
+            this.параметрыToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.параметрыToolStripMenuItem.Text = "Параметры";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // выходToolStripMenuItem
+            // 
+            this.выходToolStripMenuItem.Name = "выходToolStripMenuItem";
+            this.выходToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.выходToolStripMenuItem.Text = "Выход";
             // 
             // MainWindow
             // 
@@ -328,6 +351,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuLoad;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem выходToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem параметрыToolStripMenuItem;
     }
 }
 
